@@ -10,7 +10,8 @@ def main():
     if formato=='json':
         m.a_json(filas,columnas,nombre+'.json')
     elif formato=='xml':
-        print('hola, aqui va xml')
+        # print('hola, aqui va xml')
+        m.a_xml(filas,columnas,nombre+'.xml',nombre)
     else:
         print('hola, aqui va trama')
 

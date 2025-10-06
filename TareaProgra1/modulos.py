@@ -18,7 +18,7 @@ def lector(archivo: str):
 def formatos():
     pasa=True
     while pasa:
-        formato=input('Seleccione el formato de salida (json/xml,trama): ').strip.lower()
+        formato=input('Seleccione el formato de salida (json/xml,trama): ').strip().lower()
         if formato not in ['json','xml','trama']:
             print('Formato invalido, intente de nuevo')
         else:
@@ -41,5 +41,16 @@ def a_json(filas,cols: str,nombre: str):
     datos=[{col:fila[col] for col in cols} for  fila in filas]
     with open(nombre,'w',encoding='utf-8') as f:
         json.dump({'datos':datos},f,indent=2)
-    print(f'JSON guardado con nombre {nombre}')
+    print(f'JSON guardado como {nombre}')
 
+# conversor a XML
+def a_xml(filas,cols: str,nombre: str,original: str):
+    with open(nombre,'w',encoding='utf-8') as f:
+        f.write(f'<{original}>\n<data>\n')
+        for fila in filas:
+            f.write('  <row>\n')
+            for col in cols:
+                f.write(f'    <{col}>{fila[col]}</{col}>\n')
+            f.write('  </row>\n')
+        f.write(f'</data>\n</{original}>\n')
+    print(f'XML guardado como {nombre}')
