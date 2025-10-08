@@ -41,7 +41,7 @@ def a_json(filas,cols: str,nombre: str):
     datos=[{col:fila[col] for col in cols} for  fila in filas]
     with open(nombre,'w',encoding='utf-8') as f:
         json.dump({'data':datos},f,indent=2)
-    print(f'\nJSON guardado como {nombre}')
+    print(f'\nJSON guardado como {nombre}\n')
 
 # conversor a XML
 def a_xml(filas,cols: str,nombre: str,original: str):
@@ -55,7 +55,7 @@ def a_xml(filas,cols: str,nombre: str,original: str):
                 f.write(f'    <{col}>{valor}</{col}>\n')
             f.write('  </row>\n')
         f.write(f'</data>\n</{original}>\n')
-    print(f'\nXML guardado como {nombre}')
+    print(f'\nXML guardado como {nombre}\n')
     
 def a_trama(filas,cols: str,nombre: str):
     STX=0x02
@@ -72,4 +72,4 @@ def a_trama(filas,cols: str,nombre: str):
             frame=f'{STX:02X} {tamanno:02X} {hex} {checksum:02X} {ETX:02X}'
             f.write(frame+'\n')
     print(f'\nSeparador: {sep}\nCaracter Inicial:{str(STX)}\nCaracter Final:{str(ETX)}')
-    print(f'\nTrama guardado como {nombre}')
+    print(f'\nTrama guardado como {nombre}\n')
