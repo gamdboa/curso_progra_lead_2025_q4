@@ -15,5 +15,5 @@ def main():
     else:
         print('hola, aqui va trama')
 
-if __name__=='__main__':
+if __name__== '__main__' :
     main()
