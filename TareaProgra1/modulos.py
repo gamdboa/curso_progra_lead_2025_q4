@@ -18,7 +18,7 @@ def lector(archivo: str):
 def formatos():
     pasa=True
     while pasa:
-        formato=input('Seleccione el formato de salida (json/xml/trama): ').strip().lower()
+        formato=input('\nSeleccione el formato de salida (json/xml/trama): ').strip().lower()
         if formato not in ['json','xml','trama']:
             print('Formato invalido, intente de nuevo')
         else:
@@ -27,7 +27,7 @@ def formatos():
 
 # selector de headers
 def headers(headers: str):
-    print('Columnas disponibles:')
+    print('Columnas disponibles: ')
     for i, col in enumerate(headers,start=1):
         print(f'{i}: {col}')
     select=input('Por favor seleccione las columnas, separadas por coma (,) o presione Enter para todas las columnas:')
@@ -40,8 +40,8 @@ def headers(headers: str):
 def a_json(filas,cols: str,nombre: str):
     datos=[{col:fila[col] for col in cols} for  fila in filas]
     with open(nombre,'w',encoding='utf-8') as f:
-        json.dump({'datos':datos},f,indent=2)
-    print(f'JSON guardado como {nombre}')
+        json.dump({'data':datos},f,indent=2)
+    print(f'\nJSON guardado como {nombre}')
 
 # conversor a XML
 def a_xml(filas,cols: str,nombre: str,original: str):
@@ -55,9 +55,21 @@ def a_xml(filas,cols: str,nombre: str,original: str):
                 f.write(f'    <{col}>{valor}</{col}>\n')
             f.write('  </row>\n')
         f.write(f'</data>\n</{original}>\n')
-    print(f'XML guardado como {nombre}')
+    print(f'\nXML guardado como {nombre}')
     
-def a_trama(filas,cols: str):
-    STX='02'
-    EXT='03'
+def a_trama(filas,cols: str,nombre: str):
+    STX=0x02
+    ETX=0x03
     sep='|'
+    
+    with open(nombre,'w',encoding='ascii') as f:
+        for fila in filas:
+            descompuesto=sep.join(str(fila[col]) for col in cols)
+            bytes=descompuesto.encode('ascii',errors='replace')
+            tamanno=len(bytes)
+            checksum=sum(bytes)%256
+            hex=' '.join(f'{b:02X}' for b in bytes)
+            frame=f'{STX:02X} {tamanno:02X} {hex} {checksum:02X} {ETX:02X}'
+            f.write(frame+'\n')
+    print(f'\nSeparador: {sep}\nCaracter Inicial:{str(STX)}\nCaracter Final:{str(ETX)}')
+    print(f'\nTrama guardado como {nombre}')

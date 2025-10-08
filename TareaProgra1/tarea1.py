@@ -13,7 +13,7 @@ def main():
         # print('hola, aqui va xml')
         m.a_xml(filas,columnas,nombre+'.xml',nombre)
     else:
-        print('hola, aqui va trama')
+        m.a_trama(filas,columnas,nombre+'.dat')
 
 if __name__== '__main__' :
     main()
