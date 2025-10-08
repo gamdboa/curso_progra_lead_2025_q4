@@ -18,8 +18,8 @@ def lector(archivo: str):
 def formatos():
     pasa=True
     while pasa:
-        formato=input('\nSeleccione el formato de salida (json/xml/trama): ').strip().lower()
-        if formato not in ['json','xml','trama']:
+        formato=input('\nSeleccione el formato de salida (json/xml/hex): ').strip().lower()
+        if formato not in ['json','xml','hex']:
             print('Formato invalido, intente de nuevo')
         else:
             pasa=False
@@ -72,4 +72,4 @@ def a_trama(filas,cols: str,nombre: str):
             frame=f'{STX:02X} {tamanno:02X} {hex} {checksum:02X} {ETX:02X}'
             f.write(frame+'\n')
     print(f'\nSeparador: {sep}\nCaracter Inicial:{str(STX)}\nCaracter Final:{str(ETX)}')
-    print(f'\nTrama guardado como {nombre}\n')
+    print(f'\nTrama de bytes guardado como {nombre}\n')
